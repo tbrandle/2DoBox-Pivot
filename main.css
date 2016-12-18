@@ -1,7 +1,45 @@
 .top-section {
-  background-color: #E5F3F2
+  background-color: #E5F3F2;
+  padding: 10px;
 }
 
 .bottom-section {
-  
+
+}
+
+input {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #D1D3D4;
+  /*margin-right: 10px;
+  margin-left: 10px;*/
+}
+
+.header {
+  text-align: center;
+  font-size: 24px;
+  padding-top: 10px;
+}
+
+.title {
+
+}
+
+.body {
+
+}
+
+.save {
+  margin-bottom: 10px;
+  color: #FFFFFF;
+  border: none;
+  background-color: #00A79D;
+}
+
+.search {
+
+}
+
+.card {
+
 }
