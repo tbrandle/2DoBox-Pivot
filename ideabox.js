@@ -10,7 +10,7 @@ $("form").submit(function(e) {
 save.on("click", function() {
   console.log(title.val());
   console.log(body.val());
-  var newCard = new Card()
+  var newCard = new Card(title.val(), body.val())
   newCard.addCardToPage()
 })
 
@@ -21,9 +21,9 @@ function Card (title, body) {
 
 Card.prototype.createHTML = function () {
   return `<article class = "card">
-     <h2>Example Idea 1</h2>
+     <h2>${this.title}</h2>
      <button class = "close-card">X</button>
-     <p class = "card-body">This is stuff for the p tag to make sure it's there.</p>
+     <p class = "card-body">${this.body}</p>
      <div class = "quality-arrows">
         <button class = "up-arrow">^</button>
         <button class = "down-arrow">v</button>
