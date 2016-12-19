@@ -3,7 +3,9 @@ var body = $(".body")
 var save = $(".save")
 var bottom = $(".bottom-section")
 
-var cardLibrary = []
+var cardLibrary = {}
+
+// {id: cardObject, id2: cardobject}
 
 $("form").submit(function(e) {
    e.preventDefault();
@@ -14,7 +16,8 @@ save.on("click", function() {
   console.log(body.val());
   var newCard = new Card(title.val(), body.val())
   newCard.addCardToPage()
-  cardLibrary.push(newCard)
+  cardLibrary[this.id] = newCard
+
 })
 
 function getCardID(card) {
@@ -58,5 +61,5 @@ bottom.on('click', '.close-card', function() {
 
 bottom.on('click', '.up-arrow', function() {
   var cardID = getCardID($(this).closest('.card'))
-  console.log(cardID)
+
 })
