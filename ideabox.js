@@ -54,13 +54,14 @@ Card.prototype.addCardToPage = function() {
   bottom.append(html)
 };
 
-Card.prototype.upvoteFunction = function() {
+Card.prototype.upvoteFunction = function(card) {
   console.log('in the upvote function')
   if (this.quality === 'swill') {
     this.quality = 'plausible'
-    var qualityDisplay = $(this).children([".card-quality"])
-    console.log(qualityDisplay.text)
+    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    // var qualityDisplay = card.children(".card-quality")
   }
+  console.log(card.children().children('.card-quality').text())
 }
 
 
@@ -88,6 +89,6 @@ bottom.on('click', '.up-arrow', function() {
   var thisCard = cardLibrary[cardID]
 
   console.log(thisCard.id)
-  thisCard.upvoteFunction()
+  thisCard.upvoteFunction($(this).closest('.card'))
   console.log(thisCard.quality)
 })
