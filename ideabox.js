@@ -14,13 +14,18 @@ save.on("click", function() {
   newCard.addCardToPage()
 })
 
-function Card (title, body) {
+//new card object > localStorage > card processing > display
+
+
+function Card (title, body, quality) {
   this.title = title;
   this.body = body;
+  this.quality = quality;
+  this.id = Date.now();
 }
 
 Card.prototype.createHTML = function () {
-  return `<article class = "card">
+  return `<article id = "${this.id}" class = "card">
      <h2>${this.title}</h2>
      <button class = "close-card">X</button>
      <p class = "card-body">${this.body}</p>
@@ -34,10 +39,16 @@ Card.prototype.createHTML = function () {
 };
 
 Card.prototype.addCardToPage = function () {
+  console.log(this.id)
   var html = this.createHTML()
   bottom.append(html)
 };
 
 bottom.on('click', '.close-card', function() {
   $(this).parent().remove()
+})
+
+bottom.on('click', '.up-arrow', function() {
+  var cardID = $(this).closest('article').attr('id')
+  console.log(cardID)
 })
