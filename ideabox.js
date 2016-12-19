@@ -46,11 +46,20 @@ Card.prototype.createHTML = function () {
   </article>`
 };
 
-Card.prototype.addCardToPage = function () {
+Card.prototype.addCardToPage = function() {
   console.log(this.id)
   var html = this.createHTML()
   bottom.append(html)
 };
+
+Card.prototype.upvoteFunction = function(quality) {
+    switch (quality) {
+      case 'swill':
+        return 'plausible'
+      case 'plausible':
+        return 'genius'
+      default: 'genius'
+}}
 
 bottom.on('click', '.close-card', function() {
   $(this).parent().remove()
