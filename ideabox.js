@@ -4,6 +4,7 @@ var save = $(".save")
 var bottom = $(".bottom-section")
 
 var cardLibrary = {}
+// cardLibrary = {cardID: Card}
 
 // {id: cardObject, id2: cardobject}
 
@@ -16,14 +17,12 @@ save.on("click", function() {
   console.log(body.val());
   var newCard = new Card(title.val(), body.val())
   newCard.addCardToPage()
-  cardLibrary[this.id] = newCard
-
+  cardLibrary[getCardID($(newCard))] = newCard
 })
 
 function getCardID(card) {
   //card is a jQuery object
   return card.attr('id')
-
 }
 
 //new card object > localStorage > card processing > display
@@ -60,6 +59,7 @@ bottom.on('click', '.close-card', function() {
 })
 
 bottom.on('click', '.up-arrow', function() {
+  //get the card id, pull that card from the library, update the quality(both on page and in storage)
   var cardID = getCardID($(this).closest('.card'))
-
+  console.log(cardID)
 })
