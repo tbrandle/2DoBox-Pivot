@@ -59,23 +59,12 @@ Card.prototype.upvoteFunction = function(card) {
   if (this.quality === 'swill') {
     this.quality = 'plausible'
     card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
-    // var qualityDisplay = card.children(".card-quality")
+  } else if (this.quality === 'plausible') {
+    this.quality = 'genius'
+    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: genius</p>')
   }
   console.log(card.children().children('.card-quality').text())
 }
-
-
-
-
-
-
-
-    // switch (this.quality) {
-    //   case 'swill':
-    //     this.quality = 'plausible';
-    //   case 'plausible':
-    //     this.quality = 'genius';
-    //   default: 'genius'
 
 
 bottom.on('click', '.close-card', function() {
