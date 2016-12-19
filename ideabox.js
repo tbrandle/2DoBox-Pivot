@@ -3,6 +3,8 @@ var body = $(".body")
 var save = $(".save")
 var bottom = $(".bottom-section")
 
+var cardLibrary = []
+
 $("form").submit(function(e) {
    e.preventDefault();
 })
@@ -12,15 +14,21 @@ save.on("click", function() {
   console.log(body.val());
   var newCard = new Card(title.val(), body.val())
   newCard.addCardToPage()
+  cardLibrary.push(newCard)
 })
 
-//new card object > localStorage > card processing > display
+function getCardID(card) {
+  //card is a jQuery object
+  return card.attr('id')
 
+}
+
+//new card object > localStorage > card processing > display
 
 function Card (title, body, quality) {
   this.title = title;
   this.body = body;
-  this.quality = quality;
+  this.quality = quality || "swill"
   this.id = Date.now();
 }
 
@@ -49,6 +57,6 @@ bottom.on('click', '.close-card', function() {
 })
 
 bottom.on('click', '.up-arrow', function() {
-  var cardID = $(this).closest('article').attr('id')
+  var cardID = getCardID($(this).closest('.card'))
   console.log(cardID)
 })
