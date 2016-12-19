@@ -37,3 +37,7 @@ Card.prototype.addCardToPage = function () {
   var html = this.createHTML()
   bottom.append(html)
 };
+
+bottom.on('click', '.close-card', function() {
+  $(this).parent().remove()
+})
