@@ -56,13 +56,26 @@ Card.prototype.addCardToPage = function() {
 
 Card.prototype.upvoteFunction = function() {
   console.log('in the upvote function')
-    switch (this.quality) {
-      case 'swill':
-        this.quality = 'plausible'
-      case 'plausible':
-        this.quality = 'genius'
-      // default: 'genius'
-}}
+  if (this.quality === 'swill') {
+    this.quality = 'plausible'
+    var qualityDisplay = $(this).children([".card-quality"])
+    console.log(qualityDisplay.text)
+  }
+}
+
+
+
+
+
+
+
+    // switch (this.quality) {
+    //   case 'swill':
+    //     this.quality = 'plausible';
+    //   case 'plausible':
+    //     this.quality = 'genius';
+    //   default: 'genius'
+
 
 bottom.on('click', '.close-card', function() {
   $(this).parent().remove()
