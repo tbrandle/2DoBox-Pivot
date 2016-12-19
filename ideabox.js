@@ -27,10 +27,10 @@ function getCardID(card) {
 
 //new card object > localStorage > card processing > display
 
-function Card (title, body, quality) {
+function Card (title, body) {
   this.title = title;
   this.body = body;
-  this.quality = quality || "swill"
+  this.quality = "swill"
   this.id = Date.now();
 }
 
@@ -54,13 +54,14 @@ Card.prototype.addCardToPage = function() {
   bottom.append(html)
 };
 
-Card.prototype.upvoteFunction = function(quality) {
-    switch (quality) {
+Card.prototype.upvoteFunction = function() {
+  console.log('in the upvote function')
+    switch (this.quality) {
       case 'swill':
-        return 'plausible'
+        this.quality = 'plausible'
       case 'plausible':
-        return 'genius'
-      default: 'genius'
+        this.quality = 'genius'
+      // default: 'genius'
 }}
 
 bottom.on('click', '.close-card', function() {
@@ -71,4 +72,9 @@ bottom.on('click', '.up-arrow', function() {
   //get the card id, pull that card from the library, update the quality(both on page and in storage)
   var cardID = getCardID($(this).closest('.card'))
   console.log(cardID)
+  var thisCard = cardLibrary[cardID]
+
+  console.log(thisCard.id)
+  thisCard.upvoteFunction()
+  console.log(thisCard.quality)
 })
