@@ -1,6 +1,9 @@
 .top-section {
   background-color: #E5F3F2;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 .bottom-section {
@@ -27,6 +30,12 @@ input.input {
   text-align: center;
   font-size: 24px;
   padding-top: 10px;
+  color: #6D6E71;
+  font-weight: 700;
+}
+
+span {
+  color: #00A79D;
 }
 
 .title {
