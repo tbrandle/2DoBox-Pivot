@@ -92,6 +92,50 @@ span {
   position: absolute;
   right: 5px;
   top: 0;
+  width: 20px;
+  height: 20px;
+  background: url("./svg/delete.svg");
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+}
+
+.close-card:hover {
+  cursor: pointer;
+  background: url("./svg/delete-hover.svg");
+  outline: none;
+}
+
+.down-arrow {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url("./svg/downvote.svg");
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+}
+
+.down-arrow:hover {
+  cursor: pointer;
+  background: url("./svg/downvote-hover.svg");
+  outline: none;
+}
+
+.up-arrow {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url("./svg/upvote.svg");
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+}
+
+.up-arrow:hover {
+  cursor: pointer;
+  background: url("./svg/upvote-hover.svg");
+  outline: none;
 }
 
 .card-body {
@@ -108,11 +152,8 @@ hr {
   border-color: #D1D3D4;
 }
 
-
-.up-arrow {
-
-}
-
-.down-arrow {
-
+@media (max-width: 518px) {
+  .body {
+    height: 100px;
+  }
 }
