@@ -41,7 +41,7 @@ function Card (title, body, quality, id) {
 Card.prototype.post = function () {
   bottom.prepend(
     `<article id = "${this.id}" class = "card">
-       <h2 contenteditable="true">${this.title}</h2>
+       <h2 class = "card-header" contenteditable="true">${this.title}</h2>
        <button class = "close-card">X</button>
        <p class = "card-body" contenteditable="true">${this.body}</p>
        <div class = "quality-arrows">
@@ -79,7 +79,6 @@ Card.prototype.downvoteFunction = function(card) {
   }
 }
 
-
 function findCardJq(e) {
   return $(e).closest('.card')
 }
@@ -106,6 +105,18 @@ bottom.on('click', '.up-arrow', function() {
 bottom.on('click', '.down-arrow', function() {
   var thisCard = cardLibrary[findCardJq(this).attr('id')]
   thisCard.downvoteFunction(findCardJq(this))
+  cardLibrary.store()
+})
+
+bottom.on('blur', '.card-header', function() {
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.title = $(this).text()
+  cardLibrary.store()
+})
+
+bottom.on('blur', '.card-body', function() {
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.body = $(this).text()
   cardLibrary.store()
 })
 
