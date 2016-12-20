@@ -7,7 +7,7 @@ $("form").submit(function(e) {
    e.preventDefault()
 })
 
-
+Library = {}
 function Library() {}
 
 Library.prototype.store = function () {
@@ -41,9 +41,9 @@ function Card (title, body, quality, id) {
 Card.prototype.post = function () {
   bottom.prepend(
     `<article id = "${this.id}" class = "card">
-       <h2>${this.title}</h2>
+       <h2 contenteditable="true">${this.title}</h2>
        <button class = "close-card">X</button>
-       <p class = "card-body">${this.body}</p>
+       <p class = "card-body" contenteditable="true">${this.body}</p>
        <div class = "quality-arrows">
           <button class = "up-arrow">^</button>
           <button class = "down-arrow">v</button>
