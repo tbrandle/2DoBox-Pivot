@@ -5,32 +5,18 @@ var bottom = $(".bottom-section")
 
 var cardLibrary = {}
 // cardLibrary = {cardID: Card}
-
-// {id: cardObject, id2: cardobject}
+// {id1: cardObject, id2: cardobject}
 
 $("form").submit(function(e) {
    e.preventDefault();
 })
-
-save.on("click", function() {
-  console.log(title.val());
-  console.log(body.val());
-  var newCard = new Card(title.val(), body.val())
-  newCard.addCardToPage()
-  cardLibrary[getCardID($(newCard))] = newCard
-})
-
-function getCardID(card) {
-  //card is a jQuery object
-  return card.attr('id')
-}
 
 //new card object > localStorage > card processing > display
 
 function Card (title, body) {
   this.title = title;
   this.body = body;
-  this.quality = "swill"
+  this.quality = "swill";
   this.id = Date.now();
 }
 
@@ -55,29 +41,33 @@ Card.prototype.addCardToPage = function() {
 };
 
 Card.prototype.upvoteFunction = function(card) {
-  console.log('in the upvote function')
   if (this.quality === 'swill') {
     this.quality = 'plausible'
-    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
   } else if (this.quality === 'plausible') {
     this.quality = 'genius'
-    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: genius</p>')
+    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: genius</p>')
   }
-  console.log(card.children().children('.card-quality').text())
 }
 
+
+function pullCardObject(e) {
+  return cardLibrary[$(e).closest('.card').attr('id')]
+}
 
 bottom.on('click', '.close-card', function() {
   $(this).parent().remove()
 })
 
 bottom.on('click', '.up-arrow', function() {
-  //get the card id, pull that card from the library, update the quality(both on page and in storage)
-  var cardID = getCardID($(this).closest('.card'))
-  console.log(cardID)
-  var thisCard = cardLibrary[cardID]
-
-  console.log(thisCard.id)
+  var thisCard = pullCardObject(this)
   thisCard.upvoteFunction($(this).closest('.card'))
-  console.log(thisCard.quality)
+})
+
+save.on("click", function() {
+  console.log(title.val());
+  console.log(body.val());
+  var newCard = new Card(title.val(), body.val())
+  newCard.addCardToPage()
+  cardLibrary[$(newCard).attr('id')] = newCard
 })
