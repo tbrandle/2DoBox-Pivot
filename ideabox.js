@@ -14,25 +14,30 @@ function Library() {}
 Library.prototype.store = function () {
   localStorage.setItem('lib1', JSON.stringify(this))
   console.log(JSON.parse(localStorage.getItem('lib1')));
-
 };
 
-Library.prototype.load = function () {
+Library.prototype.load = function (library) {
   //check if localStorage, if so, load the saved library
   if(localStorage.length) {
-    var lib = JSON.parse(localStorage.getItem('lib1'))
-    console.log(lib);
-    for (var card in lib) {
-      card = lib[card]
+    var libLoad = JSON.parse(localStorage.getItem('lib1'))
+    for (var card in libLoad) {
+      card = libLoad[card]
       regenCard = new Card(card.title, card.body, card.quality, card.id)
       regenCard.post()
+      console.log(regenCard);
+      library[regenCard.id] = regenCard
     }
   }
 };
 
 
 Library.prototype.pullCard = function (e) {
+  console.log('in PullCard')
   return cardLibrary[$(e).closest('.card').attr('id')]
+};
+
+Library.prototype.removeCard = function (card) {
+
 };
 
 
@@ -88,11 +93,17 @@ Card.prototype.downvoteFunction = function(card) {
   }
 }
 
+function findCard(e) {
+  return $(e).closest('.card')
+}
 
 
 bottom.on('click', '.close-card', function() {
+  cardLibrary.removeCard(this)
+
   $(this).parent().remove()
   //Remove from library
+
 })
 
 bottom.on('click', '.up-arrow', function() {
@@ -114,4 +125,4 @@ save.on("click", function() {
 
 
 cardLibrary = new Library
-cardLibrary.load()
+cardLibrary.load(cardLibrary)
