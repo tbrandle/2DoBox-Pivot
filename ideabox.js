@@ -7,6 +7,7 @@ $("form").submit(function(e) {
    e.preventDefault();
 })
 
+
 function Library() {}
 
 Library.prototype.store = function () {
@@ -15,35 +16,19 @@ Library.prototype.store = function () {
 };
 
 Library.prototype.load = function (library) {
-  //check if localStorage, if so, load the saved library
+  //check if localStorage, if there's a library, load the saved library into our library.
   if(localStorage.length) {
     var libLoad = JSON.parse(localStorage.getItem('lib1'))
-    for (var card in libLoad) {
-      card = libLoad[card]
-      regenCard = new Card(card.title, card.body, card.quality, card.id)
+    //JSON loses constructor function info. Have to rebuild each card on load
+    for (var c in libLoad) {
+      //potential bug here as the DOCS said the order of the for...in loop is arbitrary
+      cardLoad = libLoad[c]
+      regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
       regenCard.post()
-      console.log(regenCard);
       library[regenCard.id] = regenCard
     }
   }
 };
-
-Library.prototype.pullCard = function (e) {
-  return this[$(e).closest('.card').attr('id')]
-};
-
-Library.prototype.removeCard = function (e) {
-  delete this[$(e).closest('.card').attr('id')]
-};
-
-
-// function Library() {
-//   protos:
-//   -add new card (both on screen and in library)
-//   -remove card
-//   -store library
-//   -load library
-// }
 
 
 function Card (title, body, quality, id) {
@@ -89,33 +74,33 @@ Card.prototype.downvoteFunction = function(card) {
   }
 }
 
+
 function findCardJq(e) {
   return $(e).closest('.card')
 }
-
-
-bottom.on('click', '.close-card', function() {
-  cardLibrary.removeCard(this)
-  $(this).parent().remove()
-  cardLibrary.store()
-})
-
-bottom.on('click', '.up-arrow', function() {
-  var thisCard = cardLibrary.pullCard(this)
-  thisCard.upvoteFunction($(this).closest('.card'))
-  cardLibrary.store()
-})
-
-bottom.on('click', '.down-arrow', function() {
-  var thisCard = cardLibrary.pullCard(this)
-  thisCard.downvoteFunction($(this).closest('.card'))
-  cardLibrary.store()
-})
 
 save.on("click", function() {
   var newCard = new Card(title.val(), body.val())
   newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
+  cardLibrary.store()
+})
+
+bottom.on('click', '.close-card', function() {
+  delete cardLibrary[findCardJq(this).attr('id')]
+  $(this).parent().remove()
+  cardLibrary.store()
+})
+
+bottom.on('click', '.up-arrow', function() {
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.upvoteFunction(findCardJq(this))
+  cardLibrary.store()
+})
+
+bottom.on('click', '.down-arrow', function() {
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.downvoteFunction(findCardJq(this))
   cardLibrary.store()
 })
 
