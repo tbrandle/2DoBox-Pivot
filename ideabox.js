@@ -8,12 +8,7 @@ function Library() {}
 // {id1: cardObject, id2: cardobject}
 
 Library.prototype.store = function () {
-  console.log(this)
-  console.log(JSON.stringify(this))
-  console.log('end logg');
-  localStorage.setItem('lib1', [JSON.stringify(this)])
-
-
+  localStorage.setItem('lib1', JSON.stringify(this))
   var back = JSON.parse(localStorage.getItem('lib1'))
   console.log(back);
 
@@ -22,16 +17,13 @@ Library.prototype.store = function () {
 Library.prototype.load = function () {
   //check if localStorage, if so, load the saved library
   if(localStorage.length) {
-    var tempCardStore = []
     var lib = JSON.parse(localStorage.getItem('lib1'))
     console.log(lib);
     for (var card in lib) {
-      console.log(lib[card]);
-      tempCardStore.push(lib[card])
+      card = lib[card]
+      regenCard = new Card(card.title, card.body, card.quality, card.id)
+      regenCard.post()
     }
-    tempCardStore.forEach(function(card) {
-      console.log(card);
-    })
   }
 };
 
@@ -54,32 +46,28 @@ function pullCardObject(e) {
 
 //new card object > localStorage > card processing > display
 
-function Card (title, body) {
+function Card (title, body, quality, id) {
+  this.id = id || Date.now();
   this.title = title;
   this.body = body;
-  this.quality = "swill";
-  this.id = Date.now();
+  this.quality = quality || "swill"
 }
 
-Card.prototype.createHTML = function () {
-  return `<article id = "${this.id}" class = "card">
-     <h2>${this.title}</h2>
-     <button class = "close-card">X</button>
-     <p class = "card-body">${this.body}</p>
-     <div class = "quality-arrows">
-        <button class = "up-arrow">^</button>
-        <button class = "down-arrow">v</button>
-        <p class = "card-quality">quality: swill</p>
-     </div>
-     <hr>
-  </article>`
-};
+Card.prototype.post = function () {
+  bottom.append(
+    `<article id = "${this.id}" class = "card">
+       <h2>${this.title}</h2>
+       <button class = "close-card">X</button>
+       <p class = "card-body">${this.body}</p>
+       <div class = "quality-arrows">
+          <button class = "up-arrow">^</button>
+          <button class = "down-arrow">v</button>
+          <p class = "card-quality">quality: swill</p>
+       </div>
+       <hr>
+    </article>`
+  )}
 
-Card.prototype.addCardToPage = function() {
-  console.log(this.id)
-  var html = this.createHTML()
-  bottom.append(html)
-};
 
 Card.prototype.upvoteFunction = function(card) {
   if (this.quality === 'swill') {
@@ -121,6 +109,6 @@ bottom.on('click', '.down-arrow', function() {
 
 save.on("click", function() {
   var newCard = new Card(title.val(), body.val())
-  newCard.addCardToPage()
+  newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
 })
