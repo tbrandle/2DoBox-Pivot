@@ -8,12 +8,10 @@ $("form").submit(function(e) {
 })
 
 function Library() {}
-// cardLibrary = {cardID: Card}
-// {id1: cardObject, id2: cardobject}
 
 Library.prototype.store = function () {
   localStorage.setItem('lib1', JSON.stringify(this))
-  console.log(JSON.parse(localStorage.getItem('lib1')));
+  // console.log(JSON.parse(localStorage.getItem('lib1')));
 };
 
 Library.prototype.load = function (library) {
@@ -30,14 +28,12 @@ Library.prototype.load = function (library) {
   }
 };
 
-
 Library.prototype.pullCard = function (e) {
-  console.log('in PullCard')
-  return cardLibrary[$(e).closest('.card').attr('id')]
+  return this[$(e).closest('.card').attr('id')]
 };
 
-Library.prototype.removeCard = function (card) {
-
+Library.prototype.removeCard = function (e) {
+  delete this[$(e).closest('.card').attr('id')]
 };
 
 
@@ -70,8 +66,8 @@ Card.prototype.post = function () {
        </div>
        <hr>
     </article>`
-  )}
-
+  )
+}
 
 Card.prototype.upvoteFunction = function(card) {
   if (this.quality === 'swill') {
@@ -93,34 +89,34 @@ Card.prototype.downvoteFunction = function(card) {
   }
 }
 
-function findCard(e) {
+function findCardJq(e) {
   return $(e).closest('.card')
 }
 
 
 bottom.on('click', '.close-card', function() {
   cardLibrary.removeCard(this)
-
   $(this).parent().remove()
-  //Remove from library
-
+  cardLibrary.store()
 })
 
 bottom.on('click', '.up-arrow', function() {
   var thisCard = cardLibrary.pullCard(this)
   thisCard.upvoteFunction($(this).closest('.card'))
+  cardLibrary.store()
 })
 
 bottom.on('click', '.down-arrow', function() {
   var thisCard = cardLibrary.pullCard(this)
   thisCard.downvoteFunction($(this).closest('.card'))
+  cardLibrary.store()
 })
-
 
 save.on("click", function() {
   var newCard = new Card(title.val(), body.val())
   newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
+  cardLibrary.store()
 })
 
 
