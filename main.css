@@ -1,3 +1,7 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .top-section {
   background-color: #E5F3F2;
   padding: 10px;
@@ -11,8 +15,11 @@
 
 .bottom-section {
   max-width: 400px;
-  margin: 0 auto;
+}
 
+.search-section {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 input {
@@ -37,6 +44,7 @@ input.input {
   padding-top: 10px;
   color: #6D6E71;
   font-weight: 700;
+  font-family: 'Roboto', sans-serif;
 }
 
 span {
@@ -58,6 +66,10 @@ span {
   background-color: #00A79D;
 }
 
+.save:hover {
+  background-color: #045E55;
+}
+
 .search {
   margin-bottom: 20px;
 
@@ -71,6 +83,9 @@ span {
 
 .card h2 {
   padding-bottom: 10px;
+  color: #6D6E71;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 
 .close-card {
@@ -81,10 +96,16 @@ span {
 
 .card-body {
   padding-bottom: 10px;
+  color: #939598;
 }
 
 .card-quality {
   display: inline;
+  color: #6D6E71;
+}
+
+hr {
+  border-color: #D1D3D4;
 }
 
 
