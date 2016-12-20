@@ -7,17 +7,20 @@
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-    <section class="top-section">
-      <h1 class = "header"><span>idea</span>box</h1>
-      <form>
-        <input class = "title" type="text" placeholder="title">
-        <input class = "body" type="text" placeholder="body">
-        <input  class = "save" type = "submit" value="save">
-      </form>
+    <section class = "top-section">
+      <div class = "top-section-content">
+        <h1 class = "header"><span>idea</span>box</h1>
+        <form>
+          <input class = "title" type="text" placeholder="title">
+          <input class = "body" type="text" placeholder="body">
+          <input  class = "save" type = "submit" value="save">
+        </form>
+      </div>
     </section>
+    <input class = "search" type="text" placeholder="search">
     <section class="bottom-section">
-      <input class = "search" type="text" placeholder="search">
-      <article id="test" class = "card">
+
+      <!-- <article id="test" class = "card">
          <h2>Example Idea 1</h2>
          <button class = "close-card">X</button>
          <p class = "card-body">This is stuff for the p tag to make sure it's there.</p>
@@ -27,10 +30,11 @@
             <p class = "card-quality">quality: swill</p>
          </div>
          <hr>
-      </article>
+      </article> -->
 
     </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="ideabox.js"></script>
+    <script src="ideabox-search.js"></script>
   </body>
 </html>

@@ -3,81 +3,112 @@ var body = $(".body")
 var save = $(".save")
 var bottom = $(".bottom-section")
 
-var cardLibrary = {}
-// cardLibrary = {cardID: Card}
-
-// {id: cardObject, id2: cardobject}
-
 $("form").submit(function(e) {
-   e.preventDefault();
+   e.preventDefault()
 })
 
-save.on("click", function() {
-  console.log(title.val());
-  console.log(body.val());
-  var newCard = new Card(title.val(), body.val())
-  newCard.addCardToPage()
-  cardLibrary[getCardID($(newCard))] = newCard
-})
 
-function getCardID(card) {
-  //card is a jQuery object
-  return card.attr('id')
+function Library() {}
+
+Library.prototype.store = function () {
+  localStorage.setItem('lib1', JSON.stringify(this))
+  // console.log(JSON.parse(localStorage.getItem('lib1')));
 }
 
-//new card object > localStorage > card processing > display
+Library.prototype.load = function (library) {
+  //check if localStorage, if there's a library, load the saved library into our library.
+  if(localStorage.length) {
+    var libLoad = JSON.parse(localStorage.getItem('lib1'))
+    //JSON loses constructor function info. Have to rebuild each card on load
+    for (var c in libLoad) {
+      //potential bug here as the DOCS said the order of the for...in loop is arbitrary
+      cardLoad = libLoad[c]
+      regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
+      regenCard.post()
+      library[regenCard.id] = regenCard
+    }
+  }
+}
 
-function Card (title, body) {
+
+function Card (title, body, quality, id) {
+  this.id = id || Date.now();
   this.title = title;
   this.body = body;
-  this.quality = "swill"
-  this.id = Date.now();
+  this.quality = quality || "swill"
 }
 
-Card.prototype.createHTML = function () {
-  return `<article id = "${this.id}" class = "card">
-     <h2>${this.title}</h2>
-     <button class = "close-card">X</button>
-     <p class = "card-body">${this.body}</p>
-     <div class = "quality-arrows">
-        <button class = "up-arrow">^</button>
-        <button class = "down-arrow">v</button>
-        <p class = "card-quality">quality: swill</p>
-     </div>
-     <hr>
-  </article>`
-};
+Card.prototype.post = function () {
+  bottom.prepend(
+    `<article id = "${this.id}" class = "card">
+       <h2>${this.title}</h2>
+       <button class = "close-card">X</button>
+       <p class = "card-body">${this.body}</p>
+       <div class = "quality-arrows">
+          <button class = "up-arrow">^</button>
+          <button class = "down-arrow">v</button>
+          <p class = "card-quality">quality: ${this.quality}</p>
+       </div>
+       <hr>
+    </article>`
+  )
+}
 
-Card.prototype.addCardToPage = function() {
-  console.log(this.id)
-  var html = this.createHTML()
-  bottom.append(html)
+$.prototype.updateQuality = function (quality) {
+  this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
 };
 
 Card.prototype.upvoteFunction = function(card) {
-  console.log('in the upvote function')
   if (this.quality === 'swill') {
     this.quality = 'plausible'
-    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    // card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    card.updateQuality('plausible')
   } else if (this.quality === 'plausible') {
     this.quality = 'genius'
-    card.children().children('.card-quality').replaceWith('<p class = "card-quality">quality: genius</p>')
+    card.updateQuality('genius')
   }
-  console.log(card.children().children('.card-quality').text())
+}
+
+Card.prototype.downvoteFunction = function(card) {
+  if (this.quality === 'genius') {
+    this.quality = 'plausible'
+    card.updateQuality('plausible')
+  } else if (this.quality === 'plausible') {
+    this.quality = 'swill'
+    card.updateQuality('swill')
+  }
 }
 
 
+function findCardJq(e) {
+  return $(e).closest('.card')
+}
+
+save.on("click", function() {
+  var newCard = new Card(title.val(), body.val())
+  newCard.post()
+  cardLibrary[$(newCard).attr('id')] = newCard
+  cardLibrary.store()
+})
+
 bottom.on('click', '.close-card', function() {
+  delete cardLibrary[findCardJq(this).attr('id')]
   $(this).parent().remove()
+  cardLibrary.store()
 })
 
 bottom.on('click', '.up-arrow', function() {
-  //get the card id, pull that card from the library, update the quality(both on page and in storage)
-  var cardID = getCardID($(this).closest('.card'))
-  console.log(cardID)
-  var thisCard = cardLibrary[cardID]
-
-  console.log(thisCard.id)
-  thisCard.upvoteFunction($(this).closest('.card'))
-  console.log(thisCard.quality)
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.upvoteFunction(findCardJq(this))
+  cardLibrary.store()
 })
+
+bottom.on('click', '.down-arrow', function() {
+  var thisCard = cardLibrary[findCardJq(this).attr('id')]
+  thisCard.downvoteFunction(findCardJq(this))
+  cardLibrary.store()
+})
+
+
+cardLibrary = new Library
+cardLibrary.load(cardLibrary)
