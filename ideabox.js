@@ -3,14 +3,17 @@ var body = $(".body")
 var save = $(".save")
 var bottom = $(".bottom-section")
 
+$("form").submit(function(e) {
+   e.preventDefault();
+})
+
 function Library() {}
 // cardLibrary = {cardID: Card}
 // {id1: cardObject, id2: cardobject}
 
 Library.prototype.store = function () {
   localStorage.setItem('lib1', JSON.stringify(this))
-  var back = JSON.parse(localStorage.getItem('lib1'))
-  console.log(back);
+  console.log(JSON.parse(localStorage.getItem('lib1')));
 
 };
 
@@ -27,11 +30,11 @@ Library.prototype.load = function () {
   }
 };
 
-cardLibrary = new Library
 
-$("form").submit(function(e) {
-   e.preventDefault();
-})
+Library.prototype.pullCard = function (e) {
+  return cardLibrary[$(e).closest('.card').attr('id')]
+};
+
 
 // function Library() {
 //   protos:
@@ -40,11 +43,7 @@ $("form").submit(function(e) {
 //   -store library
 //   -load library
 // }
-function pullCardObject(e) {
-  return cardLibrary[$(e).closest('.card').attr('id')]
-}
 
-//new card object > localStorage > card processing > display
 
 function Card (title, body, quality, id) {
   this.id = id || Date.now();
@@ -54,7 +53,7 @@ function Card (title, body, quality, id) {
 }
 
 Card.prototype.post = function () {
-  bottom.append(
+  bottom.prepend(
     `<article id = "${this.id}" class = "card">
        <h2>${this.title}</h2>
        <button class = "close-card">X</button>
@@ -62,7 +61,7 @@ Card.prototype.post = function () {
        <div class = "quality-arrows">
           <button class = "up-arrow">^</button>
           <button class = "down-arrow">v</button>
-          <p class = "card-quality">quality: swill</p>
+          <p class = "card-quality">quality: ${this.quality}</p>
        </div>
        <hr>
     </article>`
@@ -97,12 +96,12 @@ bottom.on('click', '.close-card', function() {
 })
 
 bottom.on('click', '.up-arrow', function() {
-  var thisCard = pullCardObject(this)
+  var thisCard = cardLibrary.pullCard(this)
   thisCard.upvoteFunction($(this).closest('.card'))
 })
 
 bottom.on('click', '.down-arrow', function() {
-  var thisCard = pullCardObject(this)
+  var thisCard = cardLibrary.pullCard(this)
   thisCard.downvoteFunction($(this).closest('.card'))
 })
 
@@ -112,3 +111,7 @@ save.on("click", function() {
   newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
 })
+
+
+cardLibrary = new Library
+cardLibrary.load()
