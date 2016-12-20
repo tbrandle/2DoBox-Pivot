@@ -4,7 +4,7 @@ var save = $(".save")
 var bottom = $(".bottom-section")
 
 $("form").submit(function(e) {
-   e.preventDefault();
+   e.preventDefault()
 })
 
 
@@ -13,7 +13,7 @@ function Library() {}
 Library.prototype.store = function () {
   localStorage.setItem('lib1', JSON.stringify(this))
   // console.log(JSON.parse(localStorage.getItem('lib1')));
-};
+}
 
 Library.prototype.load = function (library) {
   //check if localStorage, if there's a library, load the saved library into our library.
@@ -28,7 +28,7 @@ Library.prototype.load = function (library) {
       library[regenCard.id] = regenCard
     }
   }
-};
+}
 
 
 function Card (title, body, quality, id) {
@@ -54,23 +54,28 @@ Card.prototype.post = function () {
   )
 }
 
+$.prototype.updateQuality = function (quality) {
+  this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
+};
+
 Card.prototype.upvoteFunction = function(card) {
   if (this.quality === 'swill') {
     this.quality = 'plausible'
-    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    // card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    card.updateQuality('plausible')
   } else if (this.quality === 'plausible') {
     this.quality = 'genius'
-    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: genius</p>')
+    card.updateQuality('genius')
   }
 }
 
 Card.prototype.downvoteFunction = function(card) {
   if (this.quality === 'genius') {
     this.quality = 'plausible'
-    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
+    card.updateQuality('plausible')
   } else if (this.quality === 'plausible') {
     this.quality = 'swill'
-    card.find('.card-quality').replaceWith('<p class = "card-quality">quality: swill</p>')
+    card.updateQuality('swill')
   }
 }
 
