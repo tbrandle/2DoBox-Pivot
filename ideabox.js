@@ -41,11 +41,11 @@ Card.prototype.post = function () {
   bottom.prepend(
     `<article id = "${this.id}" class = "card">
        <h2 class = "card-header" contenteditable="true">${this.title}</h2>
-       <button class = "close-card">X</button>
+       <button class = "close-card"></button>
        <p class = "card-body" contenteditable="true">${this.body}</p>
        <div class = "quality-arrows">
-          <button class = "up-arrow">^</button>
-          <button class = "down-arrow">v</button>
+          <button class = "up-arrow"></button>
+          <button class = "down-arrow"></button>
           <p class = "card-quality">quality: ${this.quality}</p>
        </div>
        <hr>
