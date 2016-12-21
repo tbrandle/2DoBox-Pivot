@@ -48,7 +48,7 @@ input.input {
   padding-top: 10px;
   color: #6D6E71;
   font-weight: 700;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 span {
@@ -87,7 +87,7 @@ span {
 .card h2 {
   padding-bottom: 10px;
   color: #6D6E71;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', serif;
   font-weight: bold;
 }
 
