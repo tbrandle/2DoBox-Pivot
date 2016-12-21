@@ -7,7 +7,6 @@ $("form").submit(function(e) {
    e.preventDefault()
 })
 
-
 function Library() {}
 
 Library.prototype.store = function () {
