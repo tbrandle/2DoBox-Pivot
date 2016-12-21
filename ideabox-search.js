@@ -14,4 +14,3 @@ $('.search').on('keyup', function() {
     }
   })
 })
-'
