@@ -13,29 +13,6 @@ body {
   margin: 0 auto;
 }
 
-.bottom-section {
-  max-width: 400px;
-}
-
-.search {
-  outline: none;
-}
-
-.search-section {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-input {
-  width: 100%;
-  margin-top: 10px;
-  border: 1px solid #D1D3D4;
-  font: inherit;
-}
-
-
-
 .header {
   text-align: center;
   font-size: 24px;
@@ -43,6 +20,17 @@ input {
   color: #6D6E71;
   font-weight: 700;
   font-family: 'Roboto Slab', serif;
+}
+
+.bottom-section {
+  max-width: 400px;
+}
+
+input {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #D1D3D4;
+  font: inherit;
 }
 
 span {
@@ -59,8 +47,9 @@ span {
 
 .save {
   margin-bottom: 10px;
-  color: #FFFFFF;
   border: none;
+
+  color: #FFFFFF;
   background-color: #00A79D;
   outline: none;
   padding: 5px 0 8px 0;
@@ -72,15 +61,24 @@ span {
 
 .search {
   margin-bottom: 20px;
+  outline: none;
+}
+
+.search-section {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 .card {
   position: relative;
+
   padding: 10px;
 }
 
 .card h2 {
   padding-bottom: 10px;
+
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   font-weight: bold;
@@ -92,10 +90,12 @@ span {
   top: 0;
   width: 20px;
   height: 20px;
-  background: url("./svg/delete.svg");
-  background-repeat: no-repeat;
+
   border: none;
   outline: none;
+
+  background: url("./svg/delete.svg");
+  background-repeat: no-repeat;
 }
 
 .close-card:hover {
@@ -105,11 +105,13 @@ span {
 }
 
 .down-arrow {
-  cursor: pointer;
   width: 20px;
   height: 20px;
+
+
   background: url("./svg/downvote.svg");
   background-repeat: no-repeat;
+  cursor: pointer;
   border: none;
   outline: none;
 }
@@ -121,11 +123,12 @@ span {
 }
 
 .up-arrow {
-  cursor: pointer;
   width: 20px;
   height: 20px;
+
   background: url("./svg/upvote.svg");
   background-repeat: no-repeat;
+  cursor: pointer;
   border: none;
   outline: none;
 }
