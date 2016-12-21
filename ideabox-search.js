@@ -7,7 +7,7 @@ search.on('keyup', function() {
   for (var cardID in cardLibrary) {
     cards.push(cardID)
     }
-  onlyCardIDs = cards.filter(function(c) {
+  var onlyCardIDs = cards.filter(function(c) {
     return c > 0 ? c : null
   })
   onlyCardIDs.map(function (c) {
