@@ -1,7 +1,7 @@
-var title = $(".title")
-var body = $(".body")
-var save = $(".save")
-var bottom = $(".bottom-section")
+var $title = $(".title")
+var $body = $(".body")
+var $save = $(".save")
+var $bottom = $(".bottom-section")
 
 $("form").submit(function(e) {
    e.preventDefault()
@@ -38,7 +38,7 @@ function Card (title, body, quality, id) {
 }
 
 Card.prototype.post = function () {
-  bottom.prepend(
+  $bottom.prepend(
     `<article id = "${this.id}" class = "card">
        <h2 class = "card-header" contenteditable="true">${this.title}</h2>
        <button class = "close-card"></button>
@@ -82,38 +82,38 @@ function findCardJq(e) {
   return $(e).closest('.card')
 }
 
-save.on("click", function() {
-  var newCard = new Card(title.val(), body.val())
+$save.on("click", function() {
+  var newCard = new Card($title.val(), $body.val())
   newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
   cardLibrary.store()
 })
 
-bottom.on('click', '.close-card', function() {
+$bottom.on('click', '.close-card', function() {
   delete cardLibrary[findCardJq(this).attr('id')]
   $(this).parent().remove()
   cardLibrary.store()
 })
 
-bottom.on('click', '.up-arrow', function() {
+$bottom.on('click', '.up-arrow', function() {
   var thisCard = cardLibrary[findCardJq(this).attr('id')]
   thisCard.upvoteFunction(findCardJq(this))
   cardLibrary.store()
 })
 
-bottom.on('click', '.down-arrow', function() {
+$bottom.on('click', '.down-arrow', function() {
   var thisCard = cardLibrary[findCardJq(this).attr('id')]
   thisCard.downvoteFunction(findCardJq(this))
   cardLibrary.store()
 })
 
-bottom.on('blur', '.card-header', function() {
+$bottom.on('blur', '.card-header', function() {
   var thisCard = cardLibrary[findCardJq(this).attr('id')]
   thisCard.title = $(this).text()
   cardLibrary.store()
 })
 
-bottom.on('blur', '.card-body', function() {
+$bottom.on('blur', '.card-body', function() {
   var thisCard = cardLibrary[findCardJq(this).attr('id')]
   thisCard.body = $(this).text()
   cardLibrary.store()
