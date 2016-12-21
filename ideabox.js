@@ -7,20 +7,17 @@ $("form").submit(function(e) {
    e.preventDefault()
 })
 
+
 function Library() {}
 
 Library.prototype.store = function () {
   localStorage.setItem('lib1', JSON.stringify(this))
-  // console.log(JSON.parse(localStorage.getItem('lib1')));
 }
 
 Library.prototype.load = function (library) {
-  //check if localStorage, if there's a library, load the saved library into our library.
   if(localStorage.length) {
     var libLoad = JSON.parse(localStorage.getItem('lib1'))
-    //JSON loses constructor function info. Have to rebuild each card on load
     for (var c in libLoad) {
-      //potential bug here as the DOCS said the order of the for...in loop is arbitrary
       cardLoad = libLoad[c]
       regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
       regenCard.post()
@@ -57,24 +54,23 @@ $.prototype.updateQuality = function (quality) {
   this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
 };
 
-Card.prototype.upvoteFunction = function(card) {
+Card.prototype.upvoteFunction = function($card) {
   if (this.quality === 'swill') {
     this.quality = 'plausible'
-    // card.find('.card-quality').replaceWith('<p class = "card-quality">quality: plausible</p>')
-    card.updateQuality('plausible')
+    $card.updateQuality('plausible')
   } else if (this.quality === 'plausible') {
     this.quality = 'genius'
-    card.updateQuality('genius')
+    $card.updateQuality('genius')
   }
 }
 
-Card.prototype.downvoteFunction = function(card) {
+Card.prototype.downvoteFunction = function($card) {
   if (this.quality === 'genius') {
     this.quality = 'plausible'
-    card.updateQuality('plausible')
+    $card.updateQuality('plausible')
   } else if (this.quality === 'plausible') {
     this.quality = 'swill'
-    card.updateQuality('swill')
+    $card.updateQuality('swill')
   }
 }
 
