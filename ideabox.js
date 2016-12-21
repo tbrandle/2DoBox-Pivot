@@ -1,9 +1,9 @@
-var $title = $(".title")
-var $body = $(".body")
-var $save = $(".save")
-var $bottom = $(".bottom-section")
+var $title = $('.title')
+var $body = $('.body')
+var $save = $('.save')
+var $bottom = $('.bottom-section')
 
-$("form").submit(function(e) {
+$('form').submit(function(e) {
    e.preventDefault()
 })
 
@@ -31,7 +31,7 @@ function Card (title, body, quality, id) {
   this.id = id || Date.now();
   this.title = title;
   this.body = body;
-  this.quality = quality || "swill"
+  this.quality = quality || 'swill'
 }
 
 Card.prototype.post = function () {
@@ -78,7 +78,7 @@ function findCardJq(e) {
   return $(e).closest('.card')
 }
 
-$save.on("click", function() {
+$save.on('click', function() {
   var newCard = new Card($title.val(), $body.val())
   newCard.post()
   cardLibrary[$(newCard).attr('id')] = newCard
