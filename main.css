@@ -17,6 +17,10 @@ body {
   max-width: 400px;
 }
 
+.search {
+  outline: none;
+}
+
 .search-section {
   max-width: 400px;
   margin: 0 auto;
@@ -52,11 +56,11 @@ span {
 }
 
 .title {
-
+  outline: none;
 }
 
 .body {
-
+  outline: none;
 }
 
 .save {
@@ -64,6 +68,7 @@ span {
   color: #FFFFFF;
   border: none;
   background-color: #00A79D;
+  outline: none;
 }
 
 .save:hover {
@@ -72,13 +77,11 @@ span {
 
 .search {
   margin-bottom: 20px;
-
 }
 
 .card {
   position: relative;
   padding: 10px;
-
 }
 
 .card h2 {
@@ -138,9 +141,14 @@ span {
   outline: none;
 }
 
+.card-header {
+  outline: none;
+}
+
 .card-body {
   padding-bottom: 10px;
   color: #939598;
+  outline: none;
 }
 
 .card-quality {
