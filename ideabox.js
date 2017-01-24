@@ -13,8 +13,8 @@ Library.prototype.store = function () {
 Library.prototype.load = function (library) {
   if(localStorage.length) {
     var libLoad = JSON.parse(localStorage.getItem('lib1'))
-    for (var c in libLoad) {
-      cardLoad = libLoad[c]
+    for (var card in libLoad) {
+      cardLoad = libLoad[card]
       regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id, cardLoad.counter)
       regenCard.post()
       library[regenCard.id] = regenCard
