@@ -1,22 +1,34 @@
 const $title = $('.title');
 const $body = $('.body');
 const $save = $('.save');
-const $bottom = $('.bottom-section');
+const $cardSection = $('.bottom-section');
+
+//redo all this shit with closures 
+
+$('form').submit(e => {
+   e.preventDefault()
+})
+
+function findCardJq(e) {
+  return $(e).closest('.card')
+}
+
+function thisCard() {
+  return cardLibrary[findCardJq(this).attr('id')]
+}
 
 class Library {
   store() {
     localStorage.setItem('lib1', JSON.stringify(this))
   }
 
-  load(library) {
-    if(localStorage.length) {
-      const libLoad = JSON.parse(localStorage.getItem('lib1'));
-      for (const card in libLoad) {
-        cardLoad = libLoad[card]
-        regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id, cardLoad.counter)
-        regenCard.post()
-        library[regenCard.id] = regenCard
-      }
+  load() {
+    if(localStorage.getItem('lib1')) {
+      const libLoad = JSON.parse(localStorage.getItem('lib1'))
+      Object.keys(libLoad).forEach(id => {
+        const cardLoad = libLoad[id]
+        const regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id, cardLoad.counter)
+      })
     }
   }
 }
@@ -28,28 +40,28 @@ class Card {
     this.body = body;
     this.quality = quality || 'swill';
     this.counter = counter || 0;
-  }
-
-  post() {
-    $bottom.prepend(
-      `<article id = "${this.id}" class = "card">
-         <h2 class = "card-header" contenteditable="true">${this.title}</h2>
-         <button class = "close-card"></button>
-         <p class = "card-body" contenteditable="true">${this.body}</p>
-         <div class = "quality-arrows">
-            <button class = "up-arrow"></button>
-            <button class = "down-arrow"></button>
-            <p class = "card-quality">quality: ${this.quality}</p>
+    $cardSection.prepend(
+      `<article id="${this.id}" class="card">
+         <h2 class="card-header" contenteditable="true">${this.title}</h2>
+         <button class="close-card"></button>
+         <p class="card-body" contenteditable="true">${this.body}</p>
+         <div class="quality-arrows">
+            <button class="up-arrow"></button>
+            <button class="down-arrow"></button>
+            <p class="card-quality">quality: ${this.quality}</p>
          </div>
          <hr>
       </article>`
     )
-
+    this.$card = $(`#${this.id}`)
+    cardLibrary[this.id] = this
+    cardLibrary.store()
   }
 
   voteFunction($card) {
     if (this.counter <= 0) {
       this.quality = 'swill';
+      //this.$card
       $card.updateQuality(this.quality)
       this.counter = 0;
     } else if (this.counter === 1) {
@@ -60,45 +72,40 @@ class Card {
       $card.updateQuality(this.quality)
       this.counter = 2;
     }
+
+  updateQuality(quality) {
+    this.$card.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
+  }
+
+  remove() {
+    delete cardLibrary[this.id]
+    this.$card.remove()
   }
 }
 
-$.prototype.updateQuality = function (quality) {
-  this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
-};
-
-function findCardJq(e) {
-  return $(e).closest('.card')
-}
-
-function thisCard() {
-  return cardLibrary[findCardJq(this).attr('id')]
-}
+$cardSection.on('click', (e) => {
+  const $target = $(e.target)
+  const targetClass = $target[0].attributes.class.nodeValue
+  const card = cardLibrary[$target.closest('.card').attr('id')]
+  switch (targetClass) {
+    case 'up-arrow':
+      thisCard.call(this).counter ++;
+      thisCard.call(this).voteFunction(findCardJq(this))
+      break
+    case 'down-arrow':
+      thisCard.call(this).counter --;
+      thisCard.call(this).voteFunction(findCardJq(this))
+      break
+    case 'close-card':
+      card.remove()
+      break
+    default:
+  }
+  cardLibrary.store()
+})
 
 $save.on('click', () => {
-  const newCard = new Card($title.val(), $body.val());
-  newCard.post()
-  cardLibrary[$(newCard).attr('id')] = newCard
-  cardLibrary.store()
-})
-
-$bottom.on('click', '.close-card', function() {
-  delete cardLibrary[findCardJq(this).attr('id')]
-  $(this).parent().remove()
-  cardLibrary.store()
-})
-
-$bottom.on('click', '.up-arrow', function() {
-  thisCard.call(this).counter ++;
-  thisCard.call(this).voteFunction(findCardJq(this))
-  cardLibrary.store()
-})
-
-
-$bottom.on('click', '.down-arrow', function() {
-  thisCard.call(this).counter --;
-  thisCard.call(this).voteFunction(findCardJq(this))
-  cardLibrary.store()
+  new Card($title.val(), $body.val());
 })
 
 $bottom.on('blur', '.card-header', function() {
@@ -111,5 +118,7 @@ $bottom.on('blur', '.card-body', function() {
   cardLibrary.store()
 })
 
-cardLibrary = new Library
-cardLibrary.load(cardLibrary)
+
+const cardLibrary = new Library
+cardLibrary.load()
+
