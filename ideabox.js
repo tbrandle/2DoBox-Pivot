@@ -50,21 +50,25 @@ class Card {
   upVote() {
     if (this.quality === 'swill') {
       this.quality = 'plausible'
-      this.$card.updateQuality('plausible')
+      this.updateQuality('plausible')
     } else if (this.quality === 'plausible') {
       this.quality = 'genius'
-      this.$card.updateQuality('genius')
+      this.updateQuality('genius')
     }
   }
 
   downVote() {
     if (this.quality === 'genius') {
       this.quality = 'plausible'
-      this.$card.updateQuality('plausible')
+      this.updateQuality('plausible')
     } else if (this.quality === 'plausible') {
       this.quality = 'swill'
-      this.$card.updateQuality('swill')
+      this.updateQuality('swill')
     }
+  }
+
+  updateQuality(quality) {
+    this.$card.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
   }
 
   remove() {
@@ -72,10 +76,6 @@ class Card {
     this.$card.remove()
   }
 }
-
-$.prototype.updateQuality = function (quality) {
-  this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
-};
 
 $cardSection.on('click', (e) => {
   const $target = $(e.target)
@@ -101,19 +101,17 @@ $save.on('click', () => {
 })
 
 
-const findCardJq = (e) => {
-  return $(e).closest('.card')
+const findCardID = (e) => {
+  return $(e).closest('.card').attr('id')
 }
 
 $cardSection.on('blur', '.card-header', function() {
-  const thisCard = cardLibrary[findCardJq(this).attr('id')];
-  thisCard.title = $(this).text()
+  cardLibrary[findCardID(this)].title = $(this).text()
   cardLibrary.store()
 })
 
 $cardSection.on('blur', '.card-body', function() {
-  const thisCard = cardLibrary[findCardJq(this).attr('id')];
-  thisCard.body = $(this).text()
+  cardLibrary[findCardID(this)].body = $(this).text()
   cardLibrary.store()
 })
 
