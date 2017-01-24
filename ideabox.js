@@ -3,7 +3,7 @@ const $body = $('.body');
 const $save = $('.save');
 const $cardSection = $('.bottom-section');
 
-//redo all this shit with closures 
+//redo all this shit with closures
 
 $('form').submit(e => {
    e.preventDefault()
@@ -58,20 +58,18 @@ class Card {
     cardLibrary.store()
   }
 
-  voteFunction($card) {
+  voteFunction() {
     if (this.counter <= 0) {
-      this.quality = 'swill';
-      //this.$card
-      $card.updateQuality(this.quality)
+      this.quality = 'swill'
       this.counter = 0;
     } else if (this.counter === 1) {
       this.quality = 'plausible'
-      $card.updateQuality(this.quality)
     } else if (this.counter >= 2) {
-      this.quality = 'genius';
-      $card.updateQuality(this.quality)
-      this.counter = 2;
+      this.quality = 'genius'
+      this.counter = 2
     }
+    this.updateQuality(this.quality)
+  }
 
   updateQuality(quality) {
     this.$card.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
@@ -89,12 +87,12 @@ $cardSection.on('click', (e) => {
   const card = cardLibrary[$target.closest('.card').attr('id')]
   switch (targetClass) {
     case 'up-arrow':
-      thisCard.call(this).counter ++;
-      thisCard.call(this).voteFunction(findCardJq(this))
+      card.counter ++;
+      card.voteFunction();
       break
     case 'down-arrow':
-      thisCard.call(this).counter --;
-      thisCard.call(this).voteFunction(findCardJq(this))
+      card.counter --;
+      card.voteFunction();
       break
     case 'close-card':
       card.remove()
@@ -108,12 +106,12 @@ $save.on('click', () => {
   new Card($title.val(), $body.val());
 })
 
-$bottom.on('blur', '.card-header', function() {
+$cardSection.on('blur', '.card-header', function() {
   thisCard.call(this).title = $(this).text()
   cardLibrary.store()
 })
 
-$bottom.on('blur', '.card-body', function() {
+$cardSection.on('blur', '.card-body', function() {
   thisCard.call(this).body = $(this).text()
   cardLibrary.store()
 })
@@ -121,4 +119,3 @@ $bottom.on('blur', '.card-body', function() {
 
 const cardLibrary = new Library
 cardLibrary.load()
-
