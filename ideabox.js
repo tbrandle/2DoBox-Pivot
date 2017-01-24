@@ -13,15 +13,15 @@ class Library {
     localStorage.setItem('lib1', JSON.stringify(this))
   }
 
-  load(library) {
+  load() {
     if(localStorage.length) {
-      const libLoad = JSON.parse(localStorage.getItem('lib1'));
-      for (const c in libLoad) {
-        let cardLoad = libLoad[c]
-        let regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
+      const libLoad = JSON.parse(localStorage.getItem('lib1'))
+      Object.keys(libLoad).forEach(id => {
+        const cardLoad = libLoad[id]
+        const regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
         regenCard.post()
         this[regenCard.id] = regenCard
-      }
+      })
     }
   }
 }
@@ -75,9 +75,10 @@ $.prototype.updateQuality = function (quality) {
   this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
 };
 
-function findCardJq(e) {
+const findCardJq = (e) => {
   return $(e).closest('.card')
 }
+
 
 $save.on('click', () => {
   const newCard = new Card($title.val(), $body.val());
