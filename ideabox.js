@@ -42,28 +42,34 @@ class Card {
          <hr>
       </article>`
     )
+    this.$card = $(`#${this.id}`)
     cardLibrary[this.id] = this
     cardLibrary.store()
   }
 
-  upvoteFunction($card) {
+  upVote() {
     if (this.quality === 'swill') {
       this.quality = 'plausible'
-      $card.updateQuality('plausible')
+      this.$card.updateQuality('plausible')
     } else if (this.quality === 'plausible') {
       this.quality = 'genius'
-      $card.updateQuality('genius')
+      this.$card.updateQuality('genius')
     }
   }
 
-  downvoteFunction($card) {
+  downVote() {
     if (this.quality === 'genius') {
       this.quality = 'plausible'
-      $card.updateQuality('plausible')
+      this.$card.updateQuality('plausible')
     } else if (this.quality === 'plausible') {
       this.quality = 'swill'
-      $card.updateQuality('swill')
+      this.$card.updateQuality('swill')
     }
+  }
+
+  remove() {
+    delete cardLibrary[this.id]
+    this.$card.remove()
   }
 }
 
@@ -73,19 +79,17 @@ $.prototype.updateQuality = function (quality) {
 
 $cardSection.on('click', (e) => {
   const $target = $(e.target)
-  const action = $target[0].attributes.class.nodeValue
-  const $card = $target.closest('.card')
-  const card = cardLibrary[$card.attr('id')]
-  switch (action) {
+  const targetClass = $target[0].attributes.class.nodeValue
+  const card = cardLibrary[$target.closest('.card').attr('id')]
+  switch (targetClass) {
     case 'up-arrow':
-      card.upvoteFunction($card)
+      card.upVote()
       break
     case 'down-arrow':
-      card.downvoteFunction($card)
+      card.downVote()
       break
     case 'close-card':
-      delete cardLibrary[card.id]
-      $card.remove()
+      card.remove()
       break
     default:
   }
@@ -113,5 +117,5 @@ $cardSection.on('blur', '.card-body', function() {
   cardLibrary.store()
 })
 
-cardLibrary = new Library
+const cardLibrary = new Library
 cardLibrary.load()
