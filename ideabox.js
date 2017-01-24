@@ -3,10 +3,6 @@ var $body = $('.body')
 var $save = $('.save')
 var $bottom = $('.bottom-section')
 
-$('form').submit(function(e) {
-   e.preventDefault()
-})
-
 
 function Library() {}
 
@@ -19,19 +15,19 @@ Library.prototype.load = function (library) {
     var libLoad = JSON.parse(localStorage.getItem('lib1'))
     for (var c in libLoad) {
       cardLoad = libLoad[c]
-      regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id)
+      regenCard = new Card(cardLoad.title, cardLoad.body, cardLoad.quality, cardLoad.id, cardLoad.counter)
       regenCard.post()
       library[regenCard.id] = regenCard
     }
   }
 }
 
-
-function Card (title, body, quality, id) {
+function Card (title, body, quality, id, counter) {
   this.id = id || Date.now();
   this.title = title;
   this.body = body;
-  this.quality = quality || 'swill'
+  this.quality = quality || 'swill';
+  this.counter = counter || 0;
 }
 
 Card.prototype.post = function () {
@@ -54,28 +50,27 @@ $.prototype.updateQuality = function (quality) {
   this.find('.card-quality').replaceWith(`<p class = "card-quality">quality: ${quality}</p>`)
 };
 
-Card.prototype.upvoteFunction = function($card) {
-  if (this.quality === 'swill') {
+Card.prototype.voteFunction = function($card) {
+  if (this.counter <= 0) {
+    this.quality = 'swill';
+    $card.updateQuality(this.quality)
+    this.counter = 0;
+  } else if (this.counter === 1) {
     this.quality = 'plausible'
-    $card.updateQuality('plausible')
-  } else if (this.quality === 'plausible') {
-    this.quality = 'genius'
-    $card.updateQuality('genius')
-  }
-}
-
-Card.prototype.downvoteFunction = function($card) {
-  if (this.quality === 'genius') {
-    this.quality = 'plausible'
-    $card.updateQuality('plausible')
-  } else if (this.quality === 'plausible') {
-    this.quality = 'swill'
-    $card.updateQuality('swill')
+    $card.updateQuality(this.quality)
+  } else if (this.counter >= 2) {
+    this.quality = 'genius';
+    $card.updateQuality(this.quality)
+    this.counter = 2;
   }
 }
 
 function findCardJq(e) {
   return $(e).closest('.card')
+}
+
+function thisCard() {
+  return cardLibrary[findCardJq(this).attr('id')]
 }
 
 $save.on('click', function() {
@@ -92,29 +87,27 @@ $bottom.on('click', '.close-card', function() {
 })
 
 $bottom.on('click', '.up-arrow', function() {
-  var thisCard = cardLibrary[findCardJq(this).attr('id')]
-  thisCard.upvoteFunction(findCardJq(this))
+  thisCard.call(this).counter ++;
+  thisCard.call(this).voteFunction(findCardJq(this))
   cardLibrary.store()
 })
 
+
 $bottom.on('click', '.down-arrow', function() {
-  var thisCard = cardLibrary[findCardJq(this).attr('id')]
-  thisCard.downvoteFunction(findCardJq(this))
+  thisCard.call(this).counter --;
+  thisCard.call(this).voteFunction(findCardJq(this))
   cardLibrary.store()
 })
 
 $bottom.on('blur', '.card-header', function() {
-  var thisCard = cardLibrary[findCardJq(this).attr('id')]
-  thisCard.title = $(this).text()
+  thisCard.call(this).title = $(this).text()
   cardLibrary.store()
 })
 
 $bottom.on('blur', '.card-body', function() {
-  var thisCard = cardLibrary[findCardJq(this).attr('id')]
-  thisCard.body = $(this).text()
+  thisCard.call(this).body = $(this).text()
   cardLibrary.store()
 })
-
 
 cardLibrary = new Library
 cardLibrary.load(cardLibrary)
