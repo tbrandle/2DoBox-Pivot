@@ -19,7 +19,7 @@ test.describe('our test bundle', function () {
     driver.quit()
   })
 
-  test.it.skip('should enter a string into the title input', function () {
+  test.it('should enter a string into the title input', function () {
     const title = driver.findElement({className: 'title' })
 
     title.sendKeys('hello')
@@ -45,9 +45,7 @@ test.describe('our test bundle', function () {
 
     const completeButton = driver.findElement({className: "complete-task"})
     completeButton.click()
-    //this test is for the case where we can use 'disable' properly instead of adding a class
-    // driver.findElement({className: 'card'}).then((card) => assert(!card.isEnabled))
-
+    
     driver.findElement({className: 'card'})
       .getAttribute('class')
       .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
