@@ -45,7 +45,7 @@ test.describe('our test bundle', function () {
 
     const completeButton = driver.findElement({className: "complete-task"})
     completeButton.click()
-    
+
     driver.findElement({className: 'card'})
       .getAttribute('class')
       .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
