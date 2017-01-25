@@ -49,6 +49,28 @@ test.describe('our test bundle', function () {
 
   })
 
+  test.it('should remove an idea from the page once the delete button is clicked', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
+
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+    const deleteBtn = driver.findElement({className: 'close-card'})
+
+    deleteBtn.click()
+
+    driver.findElements({className: 'card'}).then((card) => {
+      assert.equal(card.length, 1)
+    })
+  })
+
   test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
