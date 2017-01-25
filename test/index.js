@@ -24,6 +24,9 @@ test.describe('our test bundle', function () {
     const title = driver.findElement({className: "title" })
 
     title.sendKeys('hello')
+    title.getAttribute('value').then((value) => {
+      assert.equal(value, 'hello')
+    })
 
     })
   })
