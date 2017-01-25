@@ -1,7 +1,7 @@
 
-var assert = require('assert');
-var webdriver = require('selenium-webdriver');
-var test = require('selenium-webdriver/testing');
+const assert = require('assert');
+const webdriver = require('selenium-webdriver');
+const test = require('selenium-webdriver/testing');
 
 
 test.describe('our test bundle', function () {
@@ -70,6 +70,29 @@ test.describe('our test bundle', function () {
       assert.equal(card.length, 1)
     })
   })
+
+  test.it.only('User should be able to change the value of the card title', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
+
+    title.sendKeys('this is a title')
+    body.sendKeys('this is a body')
+    saveBtn.click()
+
+    const cardHeader = driver.findElement({className: 'card-header'})
+
+    cardHeader.click()
+    cardHeader.clear()
+    cardHeader.sendKeys('I am now changing the cardHeader text\t')
+    cardHeader.getText('value').then((value) => {
+      console.log(value);
+      assert.equal(value, 'I am now changing the cardHeader text')
+    })
+  })
+
+
+
 
   test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
     const title = driver.findElement({className: 'title'})
