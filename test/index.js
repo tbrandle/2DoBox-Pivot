@@ -14,7 +14,7 @@ test.describe('our test bundle', function () {
                                 .forBrowser('chrome')
                                 .build();
     driver.get('http://localhost:8080');
-});
+  });
 
   test.afterEach(() => {
     driver.quit()
@@ -22,11 +22,29 @@ test.describe('our test bundle', function () {
 
   test.it('should open the browser', function () {
     const title = driver.findElement({className: "title" })
-
     title.sendKeys('hello')
     title.getAttribute('value').then((value) => {
       assert.equal(value, 'hello')
     })
-
-    })
   })
+
+  test.it('can complete a task', function () {
+    const title = driver.findElement({className: "title" })
+    const task = driver.findElement({className: "body"})
+    const saveButton = driver.findElement({className: "save"})
+    title.sendKeys('test task')
+    task.sendKeys('go eat food')
+    title.getAttribute('value').then((value) => {
+      assert.equal(value, 'test task')
+    })
+    task.getAttribute('value').then((value) => {
+      assert.equal(value, 'go eat food')
+    })
+    saveButton.click()
+
+    const completeButton = driver.findElement({className: "complete-task"})
+    completeButton.click()
+
+
+  })
+})
