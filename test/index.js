@@ -19,7 +19,7 @@ test.describe('our test bundle', function () {
     driver.quit()
   })
 
-  test.it('should enter a string into the title input', function () {
+  test.it.skip('should enter a string into the title input', function () {
     const title = driver.findElement({className: 'title' })
 
     title.sendKeys('hello')
@@ -29,6 +29,7 @@ test.describe('our test bundle', function () {
   })
 
   test.it('can complete a task', function () {
+    //concept note: add a 'complete' class to the card on-click
     const title = driver.findElement({className: "title" })
     const task = driver.findElement({className: "body"})
     const saveButton = driver.findElement({className: "save"})
@@ -44,14 +45,15 @@ test.describe('our test bundle', function () {
 
     const completeButton = driver.findElement({className: "complete-task"})
     completeButton.click()
-
-
+    //this test is for the case where we can use 'disable' properly instead of adding a class
+    // driver.findElement({className: 'card'}).then((card) => assert(!card.isEnabled))
+    
+    driver.findElement({className: 'card'})
+      .getAttribute('class')
+      .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
   })
-})
 
-
-  test.it('should append a TODO to the page', function () {
-    const cardLibrary = driver.findElements({className: 'card'})
+  test.it.skip('should append a TODO to the page', function () {
 
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
@@ -61,7 +63,6 @@ test.describe('our test bundle', function () {
     body.sendKeys('this is the body')
     saveBtn.click()
 
-    console.log(cardLibrary);
 
   })
 
