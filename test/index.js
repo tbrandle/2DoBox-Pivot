@@ -1,7 +1,7 @@
 
-var assert = require('assert');
-var webdriver = require('selenium-webdriver');
-var test = require('selenium-webdriver/testing');
+const assert = require('assert');
+const webdriver = require('selenium-webdriver');
+const test = require('selenium-webdriver/testing');
 
 
 test.describe('our test bundle', function () {
@@ -47,13 +47,14 @@ test.describe('our test bundle', function () {
     completeButton.click()
     //this test is for the case where we can use 'disable' properly instead of adding a class
     // driver.findElement({className: 'card'}).then((card) => assert(!card.isEnabled))
-    
+
     driver.findElement({className: 'card'})
       .getAttribute('class')
       .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
   })
 
-  test.it.skip('should append a TODO to the page', function () {
+
+  test.it('should append a TODO to the page', function () {
 
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
@@ -64,7 +65,59 @@ test.describe('our test bundle', function () {
     saveBtn.click()
 
 
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+
+    driver.findElements({className: 'card'}).then((card) => {
+      assert.equal(card.length, 2);
+    })
+
   })
+
+  test.it('should remove an idea from the page once the delete button is clicked', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
+
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+    const deleteBtn = driver.findElement({className: 'close-card'})
+
+    deleteBtn.click()
+
+    driver.findElements({className: 'card'}).then((card) => {
+      assert.equal(card.length, 1)
+    })
+  })
+
+  test.it('User should be able to change the value of the card title', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
+
+    title.sendKeys('this is a title')
+    body.sendKeys('this is a body')
+    saveBtn.click()
+
+    const cardHeader = driver.findElement({className: 'card-header'})
+
+    cardHeader.click()
+    cardHeader.clear()
+    cardHeader.sendKeys('I am now changing the cardHeader text\t')
+    cardHeader.getText('value').then((value) => {
+      console.log(value);
+      assert.equal(value, 'I am now changing the cardHeader text')
+    })
+  })
+
 
   test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
     const title = driver.findElement({className: 'title'})
