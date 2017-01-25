@@ -29,7 +29,6 @@ test.describe('our test bundle', function () {
   })
 
   test.it('should append a TODO to the page', function () {
-    const cardLibrary = driver.findElements({className: 'card'})
 
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
@@ -39,7 +38,14 @@ test.describe('our test bundle', function () {
     body.sendKeys('this is the body')
     saveBtn.click()
 
-    console.log(cardLibrary);
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+
+    driver.findElements({className: 'card'}).then((card) => {
+      assert.equal(card.length, 2);
+    })
 
   })
 
