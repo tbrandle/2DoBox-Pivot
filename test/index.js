@@ -111,28 +111,72 @@ test.describe('our test bundle', function () {
     cardHeader.clear()
     cardHeader.sendKeys('I am now changing the cardHeader text\t')
     cardHeader.getText('value').then((value) => {
-      console.log(value);
       assert.equal(value, 'I am now changing the cardHeader text')
     })
   })
 
-
-  test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
+  test.it('User should be able to change the value of the card body', function () {
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
     const saveBtn = driver.findElement({className: 'save'})
 
-    const upVote = driver.findElement({className: 'up-arrow'})
-    const downVote = driver.findElement({className: 'down-arrow'})
+
+    title.sendKeys('this is a title')
+    body.sendKeys('this is a body')
+    saveBtn.click()
+
+    const cardBody = driver.findElement({className: 'card-body'})
+
+    cardBody.click()
+    cardBody.clear()
+    cardBody.sendKeys('I am now changing the cardBody text\t')
+    cardBody.getText('value').then((value) => {
+      assert.equal(value, 'I am now changing the cardBody text')
+    })
+  })
+
+  test.it('Each TODO should start with a level of Normal', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
 
     title.sendKeys('this is the title')
     body.sendKeys('this is the body')
     saveBtn.click()
 
+    const cardQuality = driver.findElement({className: 'card-quality'})
 
+    cardQuality.getText('value').then((value) =>{
+      assert.equal(value, 'quality: normal');
+    })
   })
 
-  test.it.skip('Each TODO should start with a level of Normal')
+  test.it('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
+    const title = driver.findElement({className: 'title'})
+    const body = driver.findElement({className: 'body'})
+    const saveBtn = driver.findElement({className: 'save'})
+
+    title.sendKeys('this is the title')
+    body.sendKeys('this is the body')
+    saveBtn.click()
+
+    const upVote = driver.findElement({className: 'up-arrow'})
+    const downVote = driver.findElement({className: 'down-arrow'})
+    let cardQuality = driver.findElement({className: 'card-quality'})
+
+    cardQuality.getText('value').then((value) =>{
+      assert.equal(value, 'quality: normal');
+    })
+
+    upVote.click()
+    cardQuality = driver.findElement({className: 'card-quality'})
+
+    cardQuality.getText('value').then((value) =>{
+      assert.equal(value, 'quality: high');
+    })
+  })
+
+
   test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO')
   test.it.skip('The change of importance should persist after a page refresh')
   test.it.skip('should have 5 levels of importance')
