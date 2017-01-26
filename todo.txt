@@ -1,6 +1,7 @@
 TODO:
 - Clear inputs on save btn event.
 - throw babel (and other loaders) into webpack dependencies.
+- refactor HTML/CSS
 
 NEW FEATURES:
 - Marking a TODO as completed.

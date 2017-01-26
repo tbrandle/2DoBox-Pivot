@@ -28,6 +28,30 @@ test.describe('our test bundle', function () {
     })
   })
 
+  test.it('can complete a task', function () {
+    //concept note: add a 'complete' class to the card on-click
+    const title = driver.findElement({className: "title" })
+    const task = driver.findElement({className: "body"})
+    const saveButton = driver.findElement({className: "save"})
+    title.sendKeys('test task')
+    task.sendKeys('go eat food')
+    title.getAttribute('value').then((value) => {
+      assert.equal(value, 'test task')
+    })
+    task.getAttribute('value').then((value) => {
+      assert.equal(value, 'go eat food')
+    })
+    saveButton.click()
+
+    const completeButton = driver.findElement({className: "complete-task"})
+    completeButton.click()
+
+    driver.findElement({className: 'card'})
+      .getAttribute('class')
+      .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
+  })
+
+
   test.it('should append a TODO to the page', function () {
 
     const title = driver.findElement({className: 'title'})
@@ -37,6 +61,7 @@ test.describe('our test bundle', function () {
     title.sendKeys('this is the title')
     body.sendKeys('this is the body')
     saveBtn.click()
+
 
     title.sendKeys('this is the title')
     body.sendKeys('this is the body')
@@ -95,6 +120,7 @@ test.describe('our test bundle', function () {
     const body = driver.findElement({className: 'body'})
     const saveBtn = driver.findElement({className: 'save'})
 
+
     title.sendKeys('this is a title')
     body.sendKeys('this is a body')
     saveBtn.click()
@@ -125,7 +151,7 @@ test.describe('our test bundle', function () {
     })
   })
 
-  test.it.only('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
+  test.it('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
     const saveBtn = driver.findElement({className: 'save'})
