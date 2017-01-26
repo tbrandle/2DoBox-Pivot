@@ -151,7 +151,7 @@ test.describe('our test bundle', function () {
     })
   })
 
-  test.it.only('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
+  test.it('should be able to change the level of importance by up-voting or down-voting that specific TODO', function () {
     const title = driver.findElement({className: 'title'})
     const body = driver.findElement({className: 'body'})
     const saveBtn = driver.findElement({className: 'save'})
