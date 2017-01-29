@@ -154,6 +154,10 @@ span {
   color: #6D6E71;
 }
 
+.save:disabled {
+  background-color: red;
+}
+
 hr {
   border-color: #D1D3D4;
 }
