@@ -2,6 +2,10 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+.completed {
+  background-color: lightgreen;
+}
+
 .top-section {
   background-color: #E5F3F2;
   padding: 10px;
