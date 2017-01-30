@@ -175,11 +175,6 @@ test.describe('our test bundle', function () {
       assert.equal(value, 'quality: high');
     })
   })
-
-
-  test.it.skip('should be able to change the level of importance by up-voting or down-voting that specific TODO')
-  test.it.skip('The change of importance should persist after a page refresh')
-  test.it.skip('should have 5 levels of importance')
 })
 
   //

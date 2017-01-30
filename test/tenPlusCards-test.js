@@ -60,9 +60,6 @@ test.describe('10+ cards testing', function () {
     })
 })
 
-
-
-
   test.it('restores hidden card on delete of visable card', function () {
     const title = driver.findElement({className: "title" })
     const task = driver.findElement({className: "body"})
