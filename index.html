@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=true;">
@@ -13,10 +13,10 @@
       <div tabindex="1" class = "top-section-content">
         <h1 class="header" tabindex="1" role="heading" ><span class="logo-span">2Do</span>Box</h1>
         <form>
-          <input maxlength="75" class="title" type="text" placeholder="title">
-          <input maxlength="120" class="body" type="text" placeholder="task">
+          <input aria-label="idea title input" maxlength="75" class="title" type="text" placeholder="title">
+          <input aria-label="idea body input" maxlength="120" class="body" type="text" placeholder="task">
           <p class="counter">character count: 0</p>
-          <input  class="save" tabindex="1" role="button" aria-disabled="true" type="submit" value="save">
+          <input aria-label="save idea button" class="save" tabindex="1" role="button" aria-disabled="true" type="submit" value="save">
         </form>
         <section class="filter-section">
           <h4 class="filter-header">filter by importance:</h4>
@@ -31,7 +31,7 @@
       </div>
     </section>
   <section class="search-section">
-    <input class="search" type="text" placeholder="search">
+    <input aria-label="search ideas input" class="search" type="text" placeholder="search">
     <button class="show-completed" type="button" name="button">Show completed todo's</button>
       <section class="bottom-section">
         <!-- <article id="test" class="card">
