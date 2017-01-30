@@ -43,7 +43,7 @@ test.describe('our test bundle', function () {
     })
     saveButton.click()
 
-    const completeButton = driver.findElement({className: "complete-task"})
+    const completeButton = driver.findElement({className: "checkbox"})
     completeButton.click()
 
     driver.findElement({className: 'card'})

@@ -72,7 +72,25 @@ test.describe('10+ cards testing', function () {
       task.sendKeys(i)
       saveButton.click()
     }
+    driver.findElement({className: 'close-card'}).click()
 
+    driver.findElements({className: 'card'}).then((cards) => {
+      assert.equal(cards.length, 10)
+    })
+  })
+
+  test.it('restores hidden card on delete of visable card', function () {
+    const title = driver.findElement({className: "title" })
+    const task = driver.findElement({className: "body"})
+    const saveButton = driver.findElement({className: "save"})
+    title.sendKeys('test task ')
+    task.sendKeys('go eat food')
+    saveButton.click()
+    for (let i = 0; i < 12; i++) {
+      title.sendKeys(i)
+      task.sendKeys(i)
+      saveButton.click()
+    }
     driver.findElement({className: 'close-card'}).click()
 
     driver.findElements({className: 'card'}).then((cards) => {
