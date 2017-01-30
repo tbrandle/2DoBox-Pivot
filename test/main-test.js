@@ -3,8 +3,7 @@ const assert = require('assert');
 const webdriver = require('selenium-webdriver');
 const test = require('selenium-webdriver/testing');
 
-
-test.describe('our test bundle', function () {
+test.describe('base tests', function () {
   let driver
 
   test.beforeEach(() => {
@@ -50,7 +49,6 @@ test.describe('our test bundle', function () {
       .getAttribute('class')
       .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
   })
-
 
   test.it('should append a TODO to the page', function () {
 
@@ -176,17 +174,3 @@ test.describe('our test bundle', function () {
     })
   })
 })
-
-  //
-  //
-  // Levels of Importance are as follows
-  //
-  // 1) Critical
-  //
-  // 2) High
-  //
-  // 3) Normal
-  //
-  // 4) Low
-  //
-  // 5) None
