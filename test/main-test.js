@@ -176,17 +176,3 @@ test.describe('our test bundle', function () {
     })
   })
 })
-
-  //
-  //
-  // Levels of Importance are as follows
-  //
-  // 1) Critical
-  //
-  // 2) High
-  //
-  // 3) Normal
-  //
-  // 4) Low
-  //
-  // 5) None
