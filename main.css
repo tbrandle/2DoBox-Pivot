@@ -12,6 +12,7 @@ button,
 }
 
 input {
+  outline: none;
   width: 100%;
   margin-top: 10px;
   border: 1px solid #D1D3D4;
@@ -19,7 +20,7 @@ input {
 }
 
 /**********************************
-          TOP SECTION
+          HEADER/LOGO
 **********************************/
 
 .header {
@@ -30,56 +31,35 @@ input {
   font-weight: 700;
   font-family: 'Roboto Slab', serif;
 }
-.top-section {
-  background-color: #E5F3F2;
-  padding: 10px;
-  margin: 0 auto;
-}
 
-.top-section-content {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.search {
-  margin-bottom: 20px;
-  outline: none;
-}
-
-.search-section {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-/**********************************
-          BOTTOM SECTION
-**********************************/
-.bottom-section {
-  max-width: 400px;
-}
-
-
-
-span {
+.logo-span {
   color: #00A79D;
 }
 
-.title {
-  outline: none;
+/**********************************
+          TOP SECTION
+**********************************/
+
+.top-section {
+  background-color: #E5F3F2;
+  padding: 10px;
 }
 
-.body {
-  outline: none;
+.search-section,
+.top-section-content {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
 }
+
+
+/********** buttons ************/
 
 .save {
   margin-bottom: 10px;
   border: none;
-
   color: #FFFFFF;
   background-color: #00A79D;
-  outline: none;
   padding: 5px 0 8px 0;
 }
 
@@ -87,93 +67,33 @@ span {
   background-color: #045E55;
 }
 
-
-.completed {
-  background-color: lightgreen;
+.save:disabled {
+  background-color: #6d6e71;
 }
 
-
 /**********************************
-          TOP SECTION
+          CARD SECTION
 **********************************/
 
+.search {
+  margin-bottom: 20px;
+}
 
 .card {
   position: relative;
   padding: 10px;
 }
 
-.card h2 {
+.card-header {
   padding-bottom: 10px;
-
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   font-weight: bold;
 }
 
-.close-card {
-  position: absolute;
-  right: 5px;
-  top: 0;
-  width: 20px;
-  height: 20px;
-
-  border: none;
-  outline: none;
-
-  background: url("./svg/delete.svg");
-  background-repeat: no-repeat;
-}
-
-.close-card:hover {
-  cursor: pointer;
-  background: url("./svg/delete-hover.svg");
-  outline: none;
-}
-
-.down-arrow {
-  width: 20px;
-  height: 20px;
-
-
-  background: url("./svg/downvote.svg");
-  background-repeat: no-repeat;
-  cursor: pointer;
-  border: none;
-  outline: none;
-}
-
-.down-arrow:hover {
-  cursor: pointer;
-  background: url("./svg/downvote-hover.svg");
-  outline: none;
-}
-
-.up-arrow {
-  width: 20px;
-  height: 20px;
-
-  background: url("./svg/upvote.svg");
-  background-repeat: no-repeat;
-  cursor: pointer;
-  border: none;
-  outline: none;
-}
-
-.up-arrow:hover {
-  cursor: pointer;
-  background: url("./svg/upvote-hover.svg");
-  outline: none;
-}
-
-.card-header {
-  outline: none;
-}
-
 .card-body {
   padding-bottom: 10px;
   color: #939598;
-  outline: none;
 }
 
 .card-quality {
@@ -181,12 +101,46 @@ span {
   color: #6D6E71;
 }
 
-.save:disabled {
-  background-color: #6d6e71;
+.completed {
+  background-color: lightgreen;
 }
 
-hr {
-  border-color: #D1D3D4;
+  /********** buttons ************/
+
+.card button {
+  width: 20px;
+  height: 20px;
+  border: none;
+}
+
+.close-card {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  background: url("./svg/delete.svg");
+  background-repeat: no-repeat;
+}
+
+.down-arrow {
+  background: url("./svg/downvote.svg");
+  background-repeat: no-repeat;
+}
+
+.up-arrow {
+  background: url("./svg/upvote.svg");
+  background-repeat: no-repeat;
+}
+
+.close-card:hover {
+  background: url("./svg/delete-hover.svg");
+}
+
+.down-arrow:hover {
+  background: url("./svg/downvote-hover.svg");
+}
+
+.up-arrow:hover {
+  background: url("./svg/upvote-hover.svg");
 }
 
 /**********************************
