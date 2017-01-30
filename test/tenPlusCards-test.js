@@ -15,9 +15,9 @@ test.describe('10+ cards testing', function () {
     driver.get('http://localhost:8080');
   });
 
-  // // test.afterEach(() => {
-  //   driver.quit()
-  // })
+  test.afterEach(() => {
+    driver.quit()
+  })
 
   test.it('will not show more than 10 ideas on the page', function () {
     const title = driver.findElement({className: "title" })
@@ -56,7 +56,7 @@ test.describe('10+ cards testing', function () {
     })
   })
 
-  test.it.only('can filter results based off of importance', function () {
+  test.it('can filter results based off of importance', function () {
     const title = driver.findElement({className: "title" })
     const task = driver.findElement({className: "body"})
     const saveButton = driver.findElement({className: "save"})
