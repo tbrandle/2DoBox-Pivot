@@ -128,7 +128,8 @@ input {
 }
 
 .completed {
-  background-color: lightgreen;
+  background-color: #CCCCCC;
+  color: #666666;
 }
 
 .checkbox {
