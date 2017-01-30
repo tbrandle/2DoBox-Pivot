@@ -124,7 +124,7 @@ input {
 
 .card-quality {
   display: inline;
-  color: #6D6E71;
+  color: #939598;
 }
 
 .completed {
@@ -133,8 +133,15 @@ input {
 
 .checkbox {
   font-size: 13px;
-  display: inline;
-  background-color: green;
+  position: absolute;
+  right: 12px;
+  bottom: 9px;
+  width: 117px;
+  color: #939598;
+}
+
+.checkbox-input {
+  width: 14px;
 }
 
   /********** buttons ************/
