@@ -9,14 +9,14 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab" rel="stylesheet">
   </head>
   <body>
-    <section class="top-section">
-      <div class="top-section-content">
-        <h1 class="header"><span class="logo-span">2Do</span>Box</h1>
+    <section class = "top-section">
+      <div tabindex="1" class = "top-section-content">
+        <h1 class="header" tabindex="1" role="heading" ><span class="logo-span">2Do</span>Box</h1>
         <form>
           <input maxlength="75" class="title" type="text" placeholder="title">
           <input maxlength="120" class="body" type="text" placeholder="task">
           <p class="counter">character count: 0</p>
-          <input  class="save" type="submit" value="save">
+          <input  class="save" tabindex="1" role="button" aria-disabled="true" type="submit" value="save">
         </form>
         <section class="filter-section">
           <h4>filter by importance</h4>
@@ -26,6 +26,7 @@
           <button class="filter" type="button" name="high">high</button>
           <button class="filter" type="button" name="critical">critical</button>
           <button class="filter" type="button" name="clear">clear filter</button>
+
         </section>
       </div>
     </section>
