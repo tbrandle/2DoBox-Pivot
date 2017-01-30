@@ -76,7 +76,7 @@ input {
 }
 .filter-btn:hover,
 .filter-btn:focus {
-  background-color: lightgreen;
+  background-color: #00A79D;
   border-radius: 4px;
   border: 1px lightgrey solid;
 }
