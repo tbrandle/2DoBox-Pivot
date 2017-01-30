@@ -3,8 +3,7 @@ const assert = require('assert');
 const webdriver = require('selenium-webdriver');
 const test = require('selenium-webdriver/testing');
 
-
-test.describe('our test bundle', function () {
+test.describe('base tests', function () {
   let driver
 
   test.beforeEach(() => {
@@ -43,14 +42,13 @@ test.describe('our test bundle', function () {
     })
     saveButton.click()
 
-    const completeButton = driver.findElement({className: "complete-task"})
+    const completeButton = driver.findElement({className: "checkbox"})
     completeButton.click()
 
     driver.findElement({className: 'card'})
       .getAttribute('class')
       .then((c) => assert.equal(c.split(' ')[1] || 'card does not have a second class', 'completed'))
   })
-
 
   test.it('should append a TODO to the page', function () {
 

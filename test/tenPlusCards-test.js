@@ -19,30 +19,7 @@ test.describe('10+ cards testing', function () {
     driver.quit()
   })
 
-  test.it('should append a TODO to the page', function () {
-
-    const title = driver.findElement({className: 'title'})
-    const body = driver.findElement({className: 'body'})
-    const saveBtn = driver.findElement({className: 'save'})
-
-    title.sendKeys('this is the title')
-    body.sendKeys('this is the body')
-    saveBtn.click()
-
-
-    title.sendKeys('this is the title')
-    body.sendKeys('this is the body')
-    saveBtn.click()
-
-
-    driver.findElements({className: 'card'}).then((card) => {
-      assert.equal(card.length, 2);
-    })
-
-  })
-
   test.it('will not show more than 10 ideas on the page', function () {
-    //concept note: add a 'complete' class to the card on-click
     const title = driver.findElement({className: "title" })
     const task = driver.findElement({className: "body"})
     const saveButton = driver.findElement({className: "save"})
@@ -72,11 +49,36 @@ test.describe('10+ cards testing', function () {
       task.sendKeys(i)
       saveButton.click()
     }
-
     driver.findElement({className: 'close-card'}).click()
 
     driver.findElements({className: 'card'}).then((cards) => {
       assert.equal(cards.length, 10)
+    })
+  })
+
+  test.it('can filter results based off of importance', function () {
+    const title = driver.findElement({className: "title" })
+    const task = driver.findElement({className: "body"})
+    const saveButton = driver.findElement({className: "save"})
+    const highFilterButton = driver.findElement({name: "high"})
+    title.sendKeys('test task ')
+    task.sendKeys('go eat food')
+    saveButton.click()
+    for (let i = 0; i < 12; i++) {
+      title.sendKeys(i)
+      task.sendKeys(i)
+      saveButton.click()
+    }
+
+    const upVote = driver.findElement({className: 'up-arrow'})
+    const downVote = driver.findElement({className: 'down-arrow'})
+    let cardQuality = driver.findElement({className: 'card-quality'})
+
+    upVote.click()
+    highFilterButton.click()
+
+    driver.findElements({className: 'card'}).then((cards) => {
+      assert.equal(cards.length, 1)
     })
   })
 })
