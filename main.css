@@ -71,6 +71,7 @@ input {
   /********** buttons ************/
 
 .filter-btn {
+  margin-top: 5px;
   width: 72px;
   height: 21px;
 }
