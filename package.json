@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
-    "build": "webpack",
+    "build": "./node_modules/webpack/bin/webpack.js",
     "test": "mocha"
   },
   "author": "",
